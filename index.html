@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPC connect </title>
+  <link rel="shortcut icon" type="assets/img icon.png" href="assets/img icon.png">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f4f5f7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #logo {
+      display: block;
+      height: 100px;
+      margin: 0 auto 1.25rem;
+      object-fit: contain;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem;
+      max-width: 360px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    .wifi-icon {
+      width: 56px;
+      height: 56px;
+      background: #e8f0fe;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+      font-size: 26px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 600;
+      text-align: center;
+      color: #111;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-tag {
+      text-align: center;
+      background: #f8f9ff;
+      border: 1px solid #e0e7ff;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .price-tag .amount {
+      font-size: 34px;
+      font-weight: 700;
+      color: #1a56db;
+    }
+
+    .price-tag .label {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    label {
+      font-size: 12px;
+      color: #555;
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .pay-methods {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .pay-btn {
+      flex: 1;
+      padding: 10px 6px;
+      font-size: 13px;
+      border: 1.5px solid #ddd;
+      background: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #333;
+      transition: all .15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+    }
+
+    .pay-btn:hover { background: #f5f5f5; }
+
+    .pay-btn.selected {
+      background: #e8f0fe;
+      border-color: #1a56db;
+      color: #1a56db;
+      font-weight: 600;
+    }
+
+    .fields { margin-bottom: 1rem; }
+
+    input[type="text"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-family: inherit;
+      transition: border-color .15s;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus {
+      border-color: #1a56db;
+    }
+
+    input.coupon-input {
+      font-family: 'Courier New', monospace;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+
+    .connect-btn {
+      width: 100%;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      background: #1a56db;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .15s;
+      font-family: inherit;
+    }
+
+    .connect-btn:hover { background: #1447b3; }
+
+    .msg {
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    .msg.show { display: block; }
+    .msg-ok { background: #ecfdf5; color: #065f46; }
+    .msg-err { background: #fef2f2; color: #991b1b; }
+
+    .connected-box {
+      background: #ecfdf5;
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .connected-box .check { font-size: 36px; margin-bottom: 6px; }
+    .connected-box p { font-size: 14px; font-weight: 600; color: #065f46; }
+    .connected-box small { font-size: 12px; color: #047857; }
+
+    .hidden { display: none; }
+
+    @media (max-width: 520px) {
+      body { padding: 0.75rem; }
+      .card { padding: 1.5rem; }
+      .pay-methods { flex-direction: column; }
+      .pay-btn { width: 100%; }
+      .wifi-icon { width: 48px; height: 48px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img id="logo" src="assets/img icon.png" alt="wifi icon">
+    <h1>UPC connect</h1>
+    <p class="subtitle">Connectez-vous sans limite de temps</p>
+
+    <div class="price-tag">
+      <div class="amount">2,05$</div>
+      <div class="label">Valable 9 mois jusqu'à 2 appareils</div>
+    </div>
+
+    <div style="margin-bottom:12px">
+      <label>Moyen de paiement</label>
+      <div class="pay-methods">
+        <button class="pay-btn selected" onclick="selectPay('mobile', this)">📱 Mobile money</button>
+        <button class="pay-btn" onclick="selectPay('card', this)">💳 Carte</button>
+      </div>
+    </div>
+
+    <div id="mobile-fields" class="fields">
+      <label>Numéro de téléphone</label>
+      <input type="tel" id="phone-input" placeholder="+225 07 00 00 00 00">
+      <label>Code coupon reçu</label>
+      <input type="text" id="coupon-mobile" class="coupon-input" placeholder="WIFI-XXXX" maxlength="9" oninput="this.value=this.value.toUpperCase()">
+    </div>
+
+    <div id="card-fields" class="fields hidden">
+      <label>Numéro de carte</label>
+      <input type="text" id="card-num" placeholder="4242 4242 4242 4242" maxlength="19">
+      <label>Code coupon reçu</label>
+      <input type="text" id="coupon-card" class="coupon-input" placeholder="WIFI-XXXX" maxlength="9" oninput="this.value=this.value.toUpperCase()">
+    </div>
+
+    <button class="connect-btn" onclick="tryConnect()">🔓 Valider et se connecter</button>
+
+    <div id="portal-msg" class="msg"></div>
+
+    <div id="connected-box" class="connected-box">
+      <div class="check">✅</div>
+      <p>Connecté coupon actif</p>
+      <small>Valable 9 mois, jusqu'à 2 appareils · Bonne navigation !</small>
+    </div>
+  </div>
+
+  <script>
+    // Broadcast channel to notify admin dashboard
+    const bc = new BroadcastChannel('wifi-dashboard');
+    // Codes valides avec compteur d'appareils utilisés (max 2 par coupon)
+    const VALID_CODES = {
+      'WIFI-H8J2': { devices: 0, maxDevices: 2 },
+      'WIFI-K6N5': { devices: 0, maxDevices: 2 },
+      'WIFI-L4Q7': { devices: 1, maxDevices: 2 }, // déjà utilisé sur 1 appareil
+      'WIFI-M2W9': { devices: 0, maxDevices: 2 },
+      'WIFI-A3K9': { devices: 2, maxDevices: 2 }  // déjà au maximum
+    };
+    let payMethod = 'mobile';
+
+    function selectPay(method, btn) {
+      document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      payMethod = method;
+      document.getElementById('mobile-fields').classList.toggle('hidden', method !== 'mobile');
+      document.getElementById('card-fields').classList.toggle('hidden', method !== 'card');
+    }
+
+    function tryConnect() {
+      const code = payMethod === 'mobile'
+        ? document.getElementById('coupon-mobile').value.trim()
+        : document.getElementById('coupon-card').value.trim();
+
+      const msg = document.getElementById('portal-msg');
+      const box = document.getElementById('connected-box');
+      msg.className = 'msg';
+      box.style.display = 'none';
+
+      if (!code) {
+        msg.textContent = 'Veuillez entrer votre code coupon.';
+        msg.classList.add('show', 'msg-err');
+        return;
+      }
+
+      const coupon = VALID_CODES[code];
+
+      if (!coupon) {
+        msg.textContent = 'Code invalide.';
+        msg.classList.add('show', 'msg-err');
+        return;
+      }
+
+      if (coupon.devices >= coupon.maxDevices) {
+        msg.textContent = 'Ce coupon a déjà atteint sa limite de 2 appareils.';
+        msg.classList.add('show', 'msg-err');
+        return;
+      }
+
+      coupon.devices++;
+      msg.textContent = `Paiement vérifié — connexion en cours... (appareil ${coupon.devices}/${coupon.maxDevices})`;
+      msg.classList.add('show', 'msg-ok');
+      setTimeout(() => {
+        msg.style.display = 'none';
+        box.style.display = 'block';
+
+        // Notify admin dashboard about this new connection
+        const device = {
+          id: (crypto && crypto.randomUUID) ? crypto.randomUUID() : ('dev-' + Date.now() + Math.floor(Math.random()*1000)),
+          coupon: code,
+          ua: navigator.userAgent,
+          time: new Date().toISOString()
+        };
+        try { bc.postMessage({ type: 'connect', payload: device }); } catch (e) { console.warn('BC post failed', e); }
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
