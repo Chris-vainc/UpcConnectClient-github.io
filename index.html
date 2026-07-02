@@ -224,14 +224,14 @@
       <label>Numéro de téléphone</label>
       <input type="tel" id="phone-input" placeholder="+243 00 00 00 00">
       <label>Code coupon reçu</label>
-      <input type="text" id="coupon-mobile" class="coupon-input" placeholder="WIFI-XXXX" maxlength="9" oninput="this.value=this.value.toUpperCase()">
+      <input type="text" id="coupon-mobile" class="coupon-input" placeholder="WIFI-XXXXXX" maxlength="13" oninput="this.value=this.value.toUpperCase()">
     </div>
 
     <div id="card-fields" class="fields hidden">
       <label>Numéro de carte</label>
       <input type="text" id="card-num" placeholder="4242 4242 4242 4242" maxlength="19">
       <label>Code coupon reçu</label>
-      <input type="text" id="coupon-card" class="coupon-input" placeholder="WIFI-XXXX" maxlength="9" oninput="this.value=this.value.toUpperCase()">
+      <input type="text" id="coupon-card" class="coupon-input" placeholder="WIFI-XXXXXX" maxlength="13" oninput="this.value=this.value.toUpperCase()">
     </div>
 
     <button class="connect-btn" onclick="tryConnect()">🔓 Valider et se connecter</button>
@@ -282,8 +282,8 @@
         return;
       }
 
-      if (!/^WIFI-[A-Z0-9]{4}$/.test(code)) {
-        msg.textContent = 'Code invalide. Utilisez le format WIFI-XXXX.';
+      if (!/^WIFI-[A-Z0-9]{4,8}$/.test(code)) {
+        msg.textContent = 'Code invalide. Utilisez le format WIFI-XXXX ou WIFI-XXXXXXXX.';
         msg.classList.add('show', 'msg-err');
         return;
       }
