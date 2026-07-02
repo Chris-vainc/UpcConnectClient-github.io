@@ -282,12 +282,16 @@
         return;
       }
 
-      const coupon = VALID_CODES[code];
-
-      if (!coupon) {
-        msg.textContent = 'Code invalide.';
+      if (!/^WIFI-[A-Z0-9]{4}$/.test(code)) {
+        msg.textContent = 'Code invalide. Utilisez le format WIFI-XXXX.';
         msg.classList.add('show', 'msg-err');
         return;
+      }
+
+      let coupon = VALID_CODES[code];
+      if (!coupon) {
+        coupon = { devices: 0, maxDevices: 2 };
+        VALID_CODES[code] = coupon;
       }
 
       if (coupon.devices >= coupon.maxDevices) {
